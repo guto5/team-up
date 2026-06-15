@@ -1,0 +1,117 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && request.auth.uid == userId;
+    }
+
+    match /projects/{projectId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update, delete: if isSignedIn()
+        && request.auth.uid == resource.data.creatorId;
+
+      match /applications/{applicationId} {
+        allow read: if isSignedIn();
+        allow create: if isSignedIn()
+          && request.auth.uid == request.resource.data.userId
+          && request.resource.data.status == 'pending';
+        allow update: if isSignedIn() && (
+          request.auth.uid == resource.data.userId
+          || request.auth.uid == get(/databases/$(database)/documents/projects/$(projectId)).data.creatorId
+        );
+      }
+    }
+
+    match /{path=**}/applications/{applicationId} {
+      allow read: if isSignedIn()
+        && request.auth.uid == resource.data.userId;
+    }
+
+    function isChatMember(chatId) {
+      return exists(/databases/$(database)/documents/chats/$(chatId))
+        && request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.memberIds;
+    }
+
+    function isProjectCreator(projectId) {
+      return exists(/databases/$(database)/documents/projects/$(projectId))
+        && request.auth.uid == get(/databases/$(database)/documents/projects/$(projectId)).data.creatorId;
+    }
+
+    function isProjectTeamMember(projectId) {
+      let project = get(/databases/$(database)/documents/projects/$(projectId)).data;
+      return request.auth.uid == project.creatorId
+        || (project.keys().hasAll(['teamMemberIds'])
+          && request.auth.uid in project.teamMemberIds);
+    }
+
+    function canReadChat(chatId) {
+      return !exists(/databases/$(database)/documents/chats/$(chatId))
+        || isChatMember(chatId)
+        || isProjectTeamMember(chatId);
+    }
+
+    function canReadChatMessages(chatId) {
+      return isProjectCreator(chatId)
+        || isProjectTeamMember(chatId)
+        || isChatMember(chatId);
+    }
+
+    function canWriteChatMessage(chatId) {
+      return isProjectCreator(chatId)
+        || isProjectTeamMember(chatId)
+        || isChatMember(chatId);
+    }
+
+    function isAddingSelfToChat() {
+      let oldIds = resource.data.keys().hasAll(['memberIds'])
+        ? resource.data.memberIds
+        : [];
+      let newIds = request.resource.data.memberIds;
+      return !(request.auth.uid in oldIds)
+        && request.auth.uid in newIds
+        && newIds.size() == oldIds.size() + 1
+        && newIds.hasAll(oldIds);
+    }
+
+    match /chats/{chatId} {
+      allow read: if isSignedIn() && canReadChat(chatId);
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && (
+        isChatMember(chatId)
+        || isProjectCreator(chatId)
+        || isProjectTeamMember(chatId)
+        || isAddingSelfToChat()
+      );
+
+      match /messages/{messageId} {
+        allow read: if isSignedIn() && canReadChatMessages(chatId);
+        allow create: if isSignedIn()
+          && canWriteChatMessage(chatId)
+          && request.auth.uid == request.resource.data.senderId;
+      }
+    }
+
+    match /endorsements/{endorsementId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn()
+        && request.auth.uid == request.resource.data.endorserId
+        && request.auth.uid != request.resource.data.endorseeId;
+    }
+
+    match /classes/{classId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && (
+        request.auth.uid == resource.data.teacherId
+        || request.resource.data.studentIds.hasAll(resource.data.studentIds)
+      );
+    }
+  }
+}

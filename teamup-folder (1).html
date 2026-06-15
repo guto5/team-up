@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>TeamUp — Folder</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0A0A0A;
+  --surface: #141414;
+  --surface2: #1E1E1E;
+  --border: #2A2A2A;
+  --green: #CBFF5C;
+  --green-dim: rgba(203,255,92,0.12);
+  --white: #F5F5F5;
+  --gray: #A0A0A0;
+  --gray-dim: #6B6B6B;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #222;
+  color: var(--white);
+  margin: 0;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+/* ── PAGE ── */
+.page {
+  width: 297mm;
+  height: 210mm;
+  background: var(--bg);
+  display: grid;
+  overflow: hidden;
+  position: relative;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.page-1 { grid-template-columns: 1fr 1fr; }
+.page-2 { grid-template-columns: 1fr 1fr; }
+.page-3 { grid-template-columns: 1fr 1fr; }
+
+@media print {
+  body { background: none; padding: 0; gap: 0; }
+  .page { page-break-after: always; border-radius: 0; }
+  @page { size: A4 landscape; margin: 0; }
+}
+
+/* ── PANELS ── */
+.panel {
+  padding: 44px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  position: relative;
+  overflow: visible;
+}
+
+.panel-dark { background: var(--bg); border-right: 1px solid var(--border); }
+.panel-mid { background: var(--surface); }
+.panel-accent { background: var(--surface); }
+
+.glow-tr::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(203,255,92,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.glow-bl::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: -80px;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(203,255,92,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── TYPOGRAPHY ── */
+.logo {
+  font-size: 56px;
+  font-weight: 800;
+  letter-spacing: -2.5px;
+  line-height: 1;
+  color: var(--green);
+}
+
+.tagline {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--green-dim);
+  border: 1px solid rgba(203,255,92,0.25);
+  border-radius: 100px;
+  padding: 5px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+
+.body-text {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+/* ── UTIL CARD ── */
+.util-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 22px;
+}
+
+/* ── FEATURE GRID ── */
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.feature-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+
+.feature-icon { font-size: 20px; margin-bottom: 6px; }
+.feature-name { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+.feature-desc { font-size: 11.5px; color: var(--gray-dim); line-height: 1.5; }
+
+/* ── ADVANTAGES ── */
+.adv-list { display: flex; flex-direction: column; gap: 7px; }
+
+.adv-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #252525;
+  border-radius: 10px;
+  border-left: 3px solid var(--green);
+}
+
+.adv-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.adv-text { font-size: 11.5px; color: #C8C8C8; line-height: 1.55; }
+.adv-text strong { color: var(--white); font-weight: 700; }
+
+/* ── SKILL CHIPS ── */
+.skill-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+
+.chip {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 4px 11px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray);
+}
+
+/* ── SCREENSHOTS ── */
+.phone-showcase {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: center;
+  flex: 1;
+}
+
+.phone-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  max-width: 320px;
+}
+
+.phone-wrap img {
+  width: 100%;
+  height: 580px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 28px;
+  border: 2px solid var(--border);
+  display: block;
+  box-shadow: 0 0 48px rgba(203,255,92,0.12);
+}
+
+.phone-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  text-align: center;
+}
+
+/* ── COMPETITOR TABLE ── */
+.comp-table { width: 100%; border-collapse: collapse; }
+
+.comp-table th {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray-dim);
+  text-align: left;
+  padding: 7px 12px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.comp-table td {
+  font-size: 12px;
+  color: var(--gray);
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(42,42,42,0.6);
+  vertical-align: top;
+  line-height: 1.45;
+}
+
+.comp-table td:first-child {
+  font-weight: 700;
+  color: var(--white);
+  white-space: nowrap;
+  width: 110px;
+}
+
+.comp-table tr.hl td { background: var(--green-dim); }
+.comp-table tr.hl td:first-child { color: var(--green); }
+
+/* ── PRICING ── */
+.pricing-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+.price-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.price-card.featured { border-color: var(--green); background: linear-gradient(145deg, rgba(203,255,92,0.07), transparent); }
+
+.price-badge {
+  position: absolute;
+  top: -1px; right: 14px;
+  background: var(--green);
+  color: #0A0A0A;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 9px;
+  border-radius: 0 0 7px 7px;
+}
+
+.price-tier { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-dim); }
+.price-value { font-size: 24px; font-weight: 800; color: var(--white); letter-spacing: -0.5px; line-height: 1; }
+.price-value span { font-size: 12px; font-weight: 500; color: var(--gray-dim); }
+.price-desc { font-size: 11.5px; color: var(--gray-dim); line-height: 1.5; }
+
+.price-features { display: flex; flex-direction: column; gap: 5px; margin-top: 4px; }
+.price-feat { font-size: 11px; color: var(--gray); display: flex; align-items: flex-start; gap: 6px; line-height: 1.4; }
+.price-feat::before { content: '✓'; color: var(--green); font-weight: 700; font-size: 11px; flex-shrink: 0; }
+
+/* ── FOOTER ── */
+.footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.footer-logo { font-size: 22px; font-weight: 800; color: var(--green); }
+.footer-meta { font-size: 10px; color: var(--gray-dim); text-align: right; line-height: 1.6; }
+
+/* ── B2B NOTE ── */
+.b2b-note {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.b2b-note .icon { font-size: 18px; flex-shrink: 0; }
+.b2b-title { font-size: 12px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.b2b-body { font-size: 11.5px; color: var(--gray); line-height: 1.6; }
+
+/* ── PAGE NUMBER ── */
+.page-num {
+  position: absolute;
+  bottom: 28px;
+  right: 48px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--gray-dim);
+  letter-spacing: 0.08em;
+}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight-box {
+  background: var(--green-dim);
+  border: 1px solid rgba(203,255,92,0.2);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.highlight-box .hl-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 6px;
+}
+
+.highlight-box .hl-text {
+  font-size: 12.5px;
+  color: var(--gray);
+  line-height: 1.65;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     PÁGINA 1 — CAPA + UTILIDADE
+══════════════════════════════════════════════════ -->
+<div class="page page-1">
+
+  <!-- ESQUERDA: Hero + Utilidade -->
+  <div class="panel panel-dark glow-tr">
+
+    <div>
+      <div class="logo">TeamUp</div>
+      <div style="margin-top:10px;" class="tagline">
+        Construa projetos reais.<br>
+        Monte seu portfólio.<br>
+        Conecte estudantes. Forme equipes.
+      </div>
+      <div style="margin-top:14px;" class="hero-pill">📱 React Native · iOS &amp; Android</div>
+    </div>
+
+    <div>
+      <div class="section-label">Utilidade do Aplicativo</div>
+      <div class="section-title">O problema que o TeamUp resolve</div>
+      <div class="body-text">
+        Alunos de tecnologia chegam ao fim do curso sem conseguir provar o que sabem — seus projetos ficam espalhados entre grupos de WhatsApp, Google Drive e repositórios desorganizados, sem nenhum registro formal das skills aplicadas.
+      </div>
+    </div>
+
+    <div class="util-card">
+      <div class="body-text">
+        O TeamUp funciona como um <strong style="color:var(--white)">ecossistema fechado para o ambiente acadêmico</strong>: o aluno publica um projeto com vagas por cargo, outros alunos se candidatam, a equipe se forma, trabalha com chat dedicado, e ao final o projeto é concluído com validação peer-to-peer das skills entregues — tudo registrado automaticamente no portfólio de cada participante.
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="hl-title">👩‍🏫 Para o Professor</div>
+      <div class="hl-text">
+        Visão centralizada da turma em tempo real: cria a turma com código único, acompanha projetos vinculados à disciplina, lista de alunos e status de cada entrega — sem planilhas ou formulários paralelos.
+      </div>
+    </div>
+
+    <div class="page-num">01 / 03</div>
+  </div>
+
+  <!-- DIREITA: Screenshots grandes -->
+  <div class="panel panel-mid glow-bl" style="justify-content: center;">
+
+    <div class="section-label">Interface do App</div>
+
+    <div class="phone-showcase">
+      <div class="phone-wrap">
+        <img src="imagens para o folder/IMG_8154.PNG" alt="Feed de Projetos">
+        <div class="phone-label">Feed de Projetos</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     PÁGINA 2 — RECURSOS + VANTAGENS
+══════════════════════════════════════════════════ -->
+<div class="page page-2">
+
+  <!-- ESQUERDA: Recursos -->
+  <div class="panel panel-dark glow-tr">
+
+    <div>
+      <div class="section-label">Recursos do Aplicativo</div>
+      <div class="section-title">Tudo que você precisa para colaborar</div>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-item">
+        <div class="feature-icon">📋</div>
+        <div class="feature-name">Feed de Projetos</div>
+        <div class="feature-desc">Lista projetos abertos com filtro por turma e vagas estruturadas por cargo</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">💬</div>
+        <div class="feature-name">Chat em Tempo Real</div>
+        <div class="feature-desc">Chat exclusivo por equipe via Firebase, vinculado diretamente ao projeto</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">✅</div>
+        <div class="feature-name">Validação de Skills</div>
+        <div class="feature-desc">Endorsement peer-to-peer ao concluir projetos — colegas validam o que você entregou</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🎓</div>
+        <div class="feature-name">Turmas com Código</div>
+        <div class="feature-desc">Aluno entra com código único gerado pelo professor e vincula projetos à disciplina</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🗂️</div>
+        <div class="feature-name">Portfólio Digital</div>
+        <div class="feature-desc">Radar de skills com histórico de projetos e link compartilhável público</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📊</div>
+        <div class="feature-name">Dashboard Docente</div>
+        <div class="feature-desc">Professor acompanha projetos, alunos e status de entregas de cada turma</div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-dim);margin-bottom:8px;">Skills disponíveis na plataforma</div>
+      <div class="skill-chips">
+        <span class="chip">Node.js</span><span class="chip">.NET</span><span class="chip">Python</span>
+        <span class="chip">React</span><span class="chip">PostgreSQL</span><span class="chip">UI/UX</span>
+        <span class="chip">Figma</span><span class="chip">React Native</span><span class="chip">TypeScript</span>
+        <span class="chip">Java</span><span class="chip">Kotlin</span><span class="chip">Docker</span>
+      </div>
+    </div>
+
+    <div class="page-num">02 / 03</div>
+  </div>
+
+  <!-- DIREITA: Vantagens -->
+  <div class="panel panel-mid glow-bl">
+
+    <div>
+      <div class="section-label">Vantagens</div>
+      <div class="section-title">Por que o TeamUp é diferente?</div>
+    </div>
+
+    <div class="adv-list">
+      <div class="adv-item">
+        <div class="adv-dot"></div>
+        <div class="adv-text">
+          <strong>Portfólio automático</strong> — se monta conforme os projetos são concluídos na plataforma, sem esforço extra do aluno.
+        </div>
+      </div>
+      <div class="adv-item">
+        <div class="adv-dot"></div>
+        <div class="adv-text">
+          <strong>Validação social de skills</strong> — colegas de equipe validam as skills entregues, dando muito mais credibilidade do que uma lista autodeclarada.
+        </div>
+      </div>
+      <div class="adv-item">
+        <div class="adv-dot"></div>
+        <div class="adv-text">
+          <strong>Ambiente 100% acadêmico</strong> — ao contrário do LinkedIn, o nível de exigência é compatível com o do aluno, sem misturar profissionais experientes.
+        </div>
+      </div>
+      <div class="adv-item">
+        <div class="adv-dot"></div>
+        <div class="adv-text">
+          <strong>Formação de equipes por critério técnico</strong> — vagas com cargos e requisitos definidos, sem equipes formadas ao acaso.
+        </div>
+      </div>
+      <div class="adv-item">
+        <div class="adv-dot"></div>
+        <div class="adv-text">
+          <strong>Chat e gestão dentro do app</strong> — comunicação e acompanhamento do professor centralizados, sem depender de WhatsApp ou planilhas externas.
+        </div>
+      </div>
+      <div class="adv-item">
+        <div class="adv-dot"></div>
+        <div class="adv-text">
+          <strong>Dados sincronizados em tempo real</strong> — Firebase Firestore garante que criador, membros e professor vejam as mesmas informações ao mesmo tempo.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     PÁGINA 3 — CONCORRENTES + REMUNERAÇÃO
+══════════════════════════════════════════════════ -->
+<div class="page page-3">
+
+  <!-- ESQUERDA: Concorrentes -->
+  <div class="panel panel-dark glow-tr">
+
+    <div>
+      <div class="section-label">Concorrentes — Plataformas Similares</div>
+      <div class="section-title">Onde o TeamUp se posiciona</div>
+    </div>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Plataforma</th>
+          <th>Foco</th>
+          <th>Diferença em relação ao TeamUp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>LinkedIn</td>
+          <td>Rede profissional</td>
+          <td>Mistura todos os níveis; sem foco acadêmico nem formação de equipes</td>
+        </tr>
+        <tr>
+          <td>GitHub</td>
+          <td>Repositório de código</td>
+          <td>Técnico demais; não gera portfólio narrativo nem valida skills entre colegas</td>
+        </tr>
+        <tr>
+          <td>Behance</td>
+          <td>Portfólio criativo</td>
+          <td>Voltado a designers; sem sistema de candidatura ou gestão de equipe</td>
+        </tr>
+        <tr>
+          <td>CollabCore</td>
+          <td>Colaboração estudantil</td>
+          <td>Web (não mobile); ainda sem validação peer-to-peer de skills</td>
+        </tr>
+        <tr>
+          <td>ProjectSphere</td>
+          <td>Gestão acadêmica</td>
+          <td>Focado em TCC formal; sem portfólio público nem mercado de vagas</td>
+        </tr>
+        <tr>
+          <td>G. Classroom</td>
+          <td>Sala de aula digital</td>
+          <td>Distribuição de tarefas; sem portfólio, chat de equipe ou candidatura</td>
+        </tr>
+        <tr class="hl">
+          <td>TeamUp ✦</td>
+          <td>Acadêmico · Mobile</td>
+          <td>Único app que une formação de equipe por vagas + chat por projeto + portfólio com validação social</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight-box" style="margin-top:4px;">
+      <div class="hl-title">✦ Diferencial exclusivo</div>
+      <div class="hl-text">
+        Nenhuma outra plataforma combina os três pilares em um único app mobile: <strong style="color:var(--white)">formação de equipe por vagas, chat dedicado por projeto e portfólio com validação social</strong>, tudo dentro do contexto acadêmico.
+      </div>
+    </div>
+
+    <div class="page-num">03 / 03</div>
+  </div>
+
+  <!-- DIREITA: Remuneração -->
+  <div class="panel panel-mid glow-bl">
+
+    <div>
+      <div class="section-label">Forma de Remuneração</div>
+      <div class="section-title">Modelo Freemium</div>
+    </div>
+
+    <div class="pricing-row">
+
+      <div class="price-card">
+        <div class="price-tier">Gratuito</div>
+        <div class="price-value">R$ 0<span>/mês</span></div>
+        <div class="price-desc">Para todos os alunos e professores</div>
+        <div class="price-features">
+          <div class="price-feat">Feed, candidaturas e chat</div>
+          <div class="price-feat">Portfólio básico</div>
+          <div class="price-feat">Projetos ilimitados</div>
+          <div class="price-feat">Turmas por código</div>
+        </div>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-badge">PREMIUM</div>
+        <div class="price-tier">Individual</div>
+        <div class="price-value">R$ 19<span>,90–29,90/mês</span></div>
+        <div class="price-desc">Para alunos que querem se destacar</div>
+        <div class="price-features">
+          <div class="price-feat">Domínio personalizado</div>
+          <div class="price-feat">Destaque no feed (Boost)</div>
+          <div class="price-feat">Analytics de perfil</div>
+          <div class="price-feat">Badge verificado</div>
+        </div>
+      </div>
+
+      <div class="price-card">
+        <div class="price-tier">Institucional</div>
+        <div class="price-value">R$ 299<span>–799/mês</span></div>
+        <div class="price-desc">Por instituição de ensino</div>
+        <div class="price-features">
+          <div class="price-feat">Gestão centralizada</div>
+          <div class="price-feat">Painel do coordenador</div>
+          <div class="price-feat">Relatórios por turma</div>
+          <div class="price-feat">Suporte prioritário</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="b2b-note">
+      <div class="icon">🤝</div>
+      <div>
+        <div class="b2b-title">Parcerias Institucionais — SaaS Educacional</div>
+        <div class="b2b-body">
+          Contratos anuais por número de alunos ativos, modelo amplamente adotado por plataformas como Moodle e Canvas. Estimativa de <strong style="color:var(--white)">US$ 3–8 por aluno/mês</strong> em contratos institucionais, tornando o modelo acessível e competitivo no mercado universitário brasileiro.
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px 18px;">
+      <div style="font-size:11px;font-weight:700;color:var(--white);margin-bottom:6px;">Por que preços abaixo do mercado internacional?</div>
+      <div style="font-size:12px;color:var(--gray);line-height:1.65;">
+        O TeamUp é voltado ao público universitário brasileiro, onde o poder aquisitivo é diferente do mercado internacional. Preços acessíveis garantem maior adoção, base de usuários maior e melhor posicionamento para crescimento orgânico dentro das instituições.
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-logo">TeamUp</div>
+      <div class="footer-meta">
+        <span style="color:var(--green);font-weight:700;">teamup.app</span><br>
+        React Native · Expo · Firebase Firestore
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

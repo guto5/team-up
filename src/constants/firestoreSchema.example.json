@@ -1,0 +1,121 @@
+{
+  "collections": {
+    "users": {
+      "documentId": "{uid}",
+      "fields": {
+        "uid": "string",
+        "email": "string",
+        "displayName": "string",
+        "photoURL": "string | null",
+        "phone": "string",
+        "semester": "number",
+        "bio": "string",
+        "skills": "string[]",
+        "portfolioSlug": "string",
+        "profileComplete": "boolean",
+        "completedProjects": "array",
+        "createdAt": "timestamp",
+        "updatedAt": "timestamp"
+      }
+    },
+    "projects": {
+      "documentId": "auto",
+      "fields": {
+        "title": "string",
+        "description": "string",
+        "deadline": "string (ISO date)",
+        "isBoosted": "boolean",
+        "classTag": "string | null",
+        "creatorId": "string",
+        "creatorName": "string",
+        "creatorPhotoURL": "string | null",
+        "creatorSubtitle": "string",
+        "roles": "array of { id, title, quantity, filled, requirements[] }",
+        "status": "open | closed | completed",
+        "participantIds": "string[] (set when completed)",
+        "completedAt": "timestamp",
+        "createdAt": "timestamp"
+      },
+      "subcollections": {
+        "applications": {
+          "documentId": "{userId}_{roleId}",
+          "fields": {
+            "userId": "string",
+            "userName": "string",
+            "userPhotoURL": "string | null",
+            "roleId": "string",
+            "roleTitle": "string",
+            "projectId": "string",
+            "projectTitle": "string",
+            "status": "pending | accepted | rejected",
+            "createdAt": "timestamp"
+          }
+        }
+      }
+    },
+    "chats": {
+      "documentId": "{projectId}",
+      "fields": {
+        "projectId": "string",
+        "projectTitle": "string",
+        "memberIds": "string[]",
+        "members": "array",
+        "lastMessage": "string",
+        "createdAt": "timestamp",
+        "updatedAt": "timestamp"
+      },
+      "subcollections": {
+        "messages": {
+          "documentId": "auto",
+          "fields": {
+            "senderId": "string",
+            "senderName": "string",
+            "senderPhotoURL": "string | null",
+            "text": "string",
+            "createdAt": "timestamp"
+          }
+        }
+      }
+    },
+    "endorsements": {
+      "documentId": "{projectId}_{endorserId}_{endorseeId}_{skillName}",
+      "fields": {
+        "projectId": "string",
+        "projectTitle": "string",
+        "endorserId": "string",
+        "endorserName": "string",
+        "endorseeId": "string",
+        "skillName": "string",
+        "createdAt": "timestamp"
+      }
+    }
+  },
+  "compositeIndexes": [
+    {
+      "collectionGroup": "applications",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "projects",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "participantIds", "arrayConfig": "CONTAINS" }
+      ]
+    },
+    {
+      "collectionGroup": "endorsements",
+      "fields": [
+        { "fieldPath": "endorseeId", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "endorsements",
+      "fields": [
+        { "fieldPath": "endorserId", "order": "ASCENDING" }
+      ]
+    }
+  ]
+}

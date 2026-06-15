@@ -1,0 +1,58 @@
+[
+  {
+    "title": "App de Saúde Mental Univates",
+    "description": "Desenvolvimento de um diário de humor com gamificação. Front-end já em andamento, precisamos de infra e back.",
+    "deadline": "2026-11-30",
+    "isBoosted": true,
+    "classTag": "TCC",
+    "creatorId": "SEU_UID_AQUI",
+    "creatorName": "Ana Müller",
+    "creatorPhotoURL": null,
+    "creatorSubtitle": "Criadora • Eng. Software",
+    "status": "open",
+    "roles": [
+      {
+        "id": "role-1",
+        "title": "Back-end Node.js",
+        "quantity": 1,
+        "filled": 0,
+        "requirements": ["Node.js", "Express", "APIs REST"]
+      },
+      {
+        "id": "role-2",
+        "title": "DBA PostgreSQL",
+        "quantity": 1,
+        "filled": 0,
+        "requirements": ["PostgreSQL", "Modelagem"]
+      }
+    ]
+  },
+  {
+    "title": "Plataforma de Caronas (Vale)",
+    "description": "Aplicativo para dividir custos de caronas entre cidades do Vale do Taquari. App Nativo Android.",
+    "deadline": "2026-10-15",
+    "isBoosted": false,
+    "classTag": "ENG102",
+    "creatorId": "SEU_UID_AQUI",
+    "creatorName": "Prof. Silva",
+    "creatorPhotoURL": null,
+    "creatorSubtitle": "Professor • ENG102",
+    "status": "open",
+    "roles": [
+      {
+        "id": "role-1",
+        "title": "Dev Mobile (Kotlin)",
+        "quantity": 1,
+        "filled": 0,
+        "requirements": ["Kotlin", "Android"]
+      },
+      {
+        "id": "role-2",
+        "title": "UX Designer",
+        "quantity": 1,
+        "filled": 1,
+        "requirements": ["Figma", "UI/UX"]
+      }
+    ]
+  }
+]

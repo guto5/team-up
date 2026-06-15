@@ -1,0 +1,23 @@
+{
+  "endorsedSkills": [
+    { "name": ".NET Core", "endorserCount": 3 },
+    { "name": "SQL Server", "endorserCount": 2 }
+  ],
+  "completedProjects": [
+    {
+      "id": "proj-1",
+      "title": "Sistema de Controle de Ponto",
+      "role": "Engenheiro Back-end",
+      "period": "2025/1",
+      "description": "Desenvolvi a API completa em .NET e estruturei o banco SQL. Fomos avaliados com nota máxima na disciplina de Web II."
+    },
+    {
+      "id": "proj-2",
+      "title": "Hackathon Univates 2024",
+      "role": "Dev Fullstack",
+      "period": "Out 2024",
+      "description": "Criação de dashboard em 48h para controle de evasão escolar."
+    }
+  ],
+  "portfolioSlug": "cezarjunior"
+}
